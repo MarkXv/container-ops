@@ -8,6 +8,9 @@ For Example ...
 <code>
 	mvn clean package spring-boot:run
 </code>
+
+运行结果：
+
 <code>
 	[INFO] Scanning for projects...
 [WARNING] 
@@ -133,7 +136,11 @@ Downloaded from alimaven: http://maven.aliyun.com/nexus/content/groups/public/or
 </code>
 
 
+### The Data from Redis
 <image src="./picture/截屏2020-01-1814.06.51.png">
+
+
+### The Data from Mariadb
 <image src="./picture/截屏2020-01-1814.07.22.png">
 
 
