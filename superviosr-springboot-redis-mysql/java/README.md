@@ -13,7 +13,7 @@ For Example ...
 
 运行结果：
 
-<code>
+```
 	[INFO] Scanning for projects...
     [WARNING] 
     [WARNING] Some problems were encountered while building the effective model for org.example:ops:jar:1.0-SNAPSHOT
@@ -135,7 +135,7 @@ For Example ...
     2020-01-18 13:52:07.989  INFO 7578 --- [           main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
     2020-01-18 13:52:08.063  INFO 7578 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8090 (http) with context path ''
     2020-01-18 13:52:08.065  INFO 7578 --- [           main] com.ops.SpringBoot                       : Started SpringBoot in 1.923 seconds (JVM running for 2.176)
-</code>
+```
 
 
 ### The Data from Redis
