@@ -7,20 +7,33 @@
         body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
     </style>
     <script type="text/javascript" src="../map/js/bmap_offline_api_min.js"></script>
+    <script type="text/javascript" src="../map/js/jquery-3.4.1.min.js"></script>
     <title>地图展示</title>
 </head>
 <body>
-<div id="allmap"></div>
+<div align="center">
+<div id="r-result">
+    <input type="text" id="name" size="20"  style="width:900px;height:30px" placeholder="请输入项目名称"/>
+    <input type="text" id="id" size="20"  style="width:900px;height:30px" placeholder="请输入id"/>
+    <input type="text" id="desc" size="20"  style="width:900px;height:30px" placeholder="请输入详细信息"/>
+    <input type="text" id="addr" size="20"  style="width:900px;height:30px" placeholder="请输入地址"/>
+    <input type="text" id="phone" size="20"  style="width:900px;height:30px" placeholder="请输入电话"/>
+    <br>
+    <input type="button" id="save" class="btn btn-danger" value="保存" style="width: 150px;height: 35px">
+</div>
+<div style="width: 900px;height: 500px" id="allmap"></div>
+</div>
 </body>
 </html>
 <script type="text/javascript">
     // 百度地图API功能
     var map = new BMap.Map("allmap");    // 创建Map实例
     map.centerAndZoom(new BMap.Point(108.93, 34.27), 5);  // 初始化地图,设置中心点坐标和地图级别
-    map.addControl(new BMap.NavigationControl());
+    //控件设置
+    /*map.addControl(new BMap.NavigationControl());
     map.addControl(new BMap.ScaleControl());
     map.addControl(new BMap.OverviewMapControl());
-    map.addControl(new BMap.MapTypeControl());
+    map.addControl(new BMap.MapTypeControl());*/
     //添加地图类型控件
     map.addControl(new BMap.MapTypeControl({
         mapTypes:[
@@ -32,10 +45,6 @@
     map.setCurrentCity("西安");          // 设置地图显示的城市 此项是必须设置的
     map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
 
-    map.addControl(new BMap.NavigationControl());
-    map.addControl(new BMap.ScaleControl());
-    map.addControl(new BMap.OverviewMapControl());
-    map.addControl(new BMap.MapTypeControl());
     var pt;
 
     //保证只有一个标记手动标记点
@@ -52,6 +61,105 @@
                 }
             }
             map.addOverlay(marker2);
+            addMarker(points)
         }
     )
+
+
+    //循环设置地图标记
+
+    //此处数据改为有数据库读取
+    var points = [
+        {"lng":116,"lat":40,"url":"http://www.baidu.com","id":50,"name":"p1"},
+        {"lng":117,"lat":31,"url":"http://www.taobao.com","id":2,"name":"p2"},
+        {"lng":116,"lat":34,"url":"http://www.google.com","id":3,"name":"p3"}
+    ]
+
+
+
+    addMarker(points)
+
+    function addMarker(points){  // 创建图标对象
+        $.ajax({
+            type: 'GET',
+            url: "/map/getPoints",
+            success: function (data) {
+                points = data.toString();
+            }
+
+        });
+        // 创建标注对象并添加到地图
+        for(var i = 0,pointsLen = points.length;i <pointsLen;i++){
+            var point = new BMap.Point(points[i].lng,points[i].lat);
+            var  marker = new BMap.Marker(point);
+            map.addOverlay(marker);
+            //给标注点添加点击事件。使用立即执行函数和闭包
+            (function() {
+                var thePoint = points[i];
+                marker.addEventListener("click",function(){
+                    showInfo(this,thePoint);
+                });
+            })();
+
+        }
+
+    }
+
+    //显示信息窗口，显示标注点的信息。
+    function showInfo(thisMaker,point){
+        var sContent =
+            '<ul style="margin:0 0 5px 0;padding:0.2em 0">'
+            +'<li style="line-height: 26px;font-size: 15px;">'
+            +'<span style="width: 50px;display: inline-block;">id：</span>' + point.id + '</li>'
+            +'<li style="line-height: 26px;font-size: 15px;">'
+            +'<span style="width: 50px;display: inline-block;">名称：</span>' + point.name + '</li>'
+            +'<li style="line-height: 26px;font-size: 15px;"><span style="width: 50px;display: inline-block;">查看：</span><a href="'+point.url+'">详情</a></li>'
+            +'</ul>';
+        var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
+        thisMaker.openInfoWindow(infoWindow);   //图片加载完毕重绘infowindow
+    }
+
+    var url = "/map/savePoint";
+    function addPoint() {
+        var name = document.getElementById("name").value;
+        var id = document.getElementById("id").value;
+        var desc = document.getElementById("desc").value;
+        var addr = document.getElementById("addr").value;
+        var phone = document.getElementById("phone").value;
+        var level = "";
+        if(pt == undefined){
+            alert("请选择地点！")
+            return;
+        }
+        var lat = pt.lat;
+        var lng = pt.lng;
+        data = JSON.stringify({
+            "name":name,
+            "id":id,
+            "desc":desc,
+            "addr":addr,
+            "phone":phone,
+            "lat":lat,
+            "lng":lng,
+            "level":level
+        })
+        $.ajax({
+            type: 'POST',
+            url: url,
+            contentType:"application/json",
+            data: data,
+            dataType: "json",
+            success: function () {
+                alert("保存成功")
+            }
+
+        });
+        alert(name + "," + id +"," + desc + "," + addr + "," + phone + pt.lat + pt.lng);
+
+    }
+    $("#save").click(function () {
+        addPoint()
+    })
+
+
 </script>
