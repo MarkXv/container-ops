@@ -27,7 +27,7 @@ public class ExampleService {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @Autowired
+
     private JdbcTemplate jdbcTemplate;
 
     private ObjectMapper objectMapper = new ObjectMapper();
