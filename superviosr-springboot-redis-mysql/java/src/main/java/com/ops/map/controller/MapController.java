@@ -51,7 +51,7 @@ public class MapController {
     @ResponseBody
     public List<MapPojo> getMapPojos (){
 
-        List<MapPojo> result = new ArrayList<>();
+        List<MapPojo> result = new ArrayList();
         result = mapService.getMapPojoList();
         return result;
 

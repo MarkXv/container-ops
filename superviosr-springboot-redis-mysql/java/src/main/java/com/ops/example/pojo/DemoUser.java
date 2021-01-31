@@ -1,10 +1,14 @@
 package com.ops.example.pojo;
 
+
 public class DemoUser {
+
+    public DemoUser() {
+    }
 
     private int id;
     private String username;
-    private int sex;
+    private String sex;
     private String city;
 
     @Override
@@ -33,11 +37,11 @@ public class DemoUser {
         this.username = username;
     }
 
-    public int getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(int sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 

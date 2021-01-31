@@ -18,7 +18,7 @@ public class MapService {
 //    @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @Autowired
+    @Autowired(required = false)
     private MapMapper mapMapper;
 
     public boolean savePoint(MapPojo mapPojo){
@@ -32,7 +32,6 @@ public class MapService {
                 + mapPojo.getLng() + "');";
 
         try{
-            //jdbcTemplate.execute(sql);
             mapMapper.savePoint(mapPojo);
             return true;
         }catch (Exception e){
