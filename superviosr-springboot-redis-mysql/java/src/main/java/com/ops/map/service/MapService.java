@@ -18,18 +18,18 @@ public class MapService {
 //    @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @Autowired(required = false)
+    @Autowired
     private MapMapper mapMapper;
 
     public boolean savePoint(MapPojo mapPojo){
-        String sql = "insert into map_point(addr,`desc`,name,phone,`level`,lat,lng) value ('";
-        sql = sql + mapPojo.getAddr() + "','"
-                + mapPojo.getDesc() + "','"
-                + mapPojo.getName() + "','"
-                + mapPojo.getPhone() + "',"
-                + mapPojo.getLevel() + ",'"
-                + mapPojo.getLat() + "','"
-                + mapPojo.getLng() + "');";
+//        String sql = "insert into map_point(addr,`desc`,name,phone,`level`,lat,lng) value ('";
+//        sql = sql + mapPojo.getAddr() + "','"
+//                + mapPojo.getDesc() + "','"
+//                + mapPojo.getName() + "','"
+//                + mapPojo.getPhone() + "',"
+//                + mapPojo.getLevel() + ",'"
+//                + mapPojo.getLat() + "','"
+//                + mapPojo.getLng() + "');";
 
         try{
             mapMapper.savePoint(mapPojo);
@@ -44,8 +44,7 @@ public class MapService {
     public List<MapPojo> getMapPojoList(){
         List<MapPojo> result = new ArrayList<>();
 
-        String sql = "select * from map_point";
-        result = jdbcTemplate.query(sql, new BeanPropertyRowMapper<MapPojo>(MapPojo.class));
+        result = mapMapper.getPointList();
         //jdbcTemplate.new
         return result;
     }

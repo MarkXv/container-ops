@@ -59,10 +59,9 @@ public class MylogInterceptor implements Interceptor {
         //获取sql语句
         String sql =showSql(configuration, boundSql);
 
+        LOGGER.debug(sql);
         //saveSql(sql);
 
-        System.out.println("1");
-        System.out.println(sql);
         return invocation.proceed();
     }
 
@@ -133,7 +132,6 @@ public class MylogInterceptor implements Interceptor {
         logEvent.setStatus(0);
         logEventService.saveLogEvent(logEvent);
     }
-
 
 
 

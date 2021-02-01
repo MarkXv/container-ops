@@ -11,5 +11,9 @@
 
     </insert>
 
+    <select id="getPointList" resultType="com.ops.map.pojo.MapPojo">
+        select * from map_point
+    </select>
+
 
 </mapper>

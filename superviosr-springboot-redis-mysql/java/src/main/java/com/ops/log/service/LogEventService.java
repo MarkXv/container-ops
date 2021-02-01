@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 @Service
 public class LogEventService {
 
-    @Autowired(required=false)
+    @Autowired
     private LogEventMapper logEventMapper;
 
     public void saveLogEvent(LogEvent logEvent){

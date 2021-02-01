@@ -3,16 +3,29 @@ server:
   servlet:
     context-path: /
 spring:
+  main:
+    allow-bean-definition-overriding: true
   datasource:
     url: jdbc:mysql://xx.xxx.xxx.xxx:3307/maptest?characterEncoding=utf-8&useSSL=false
     username: root
-    password: mypassword
+    password: password..
     driver-class-name: com.mysql.jdbc.Driver
   redis:
     host: xx.xxx.xxx.xxx
     port: 6379
     timeout: 30000
-    password: mypassword
+    password: password..
+  data:
+    mongodb:
+      host: xx.xxx.xxx.xxx
+      port: 27017
+      database: workFlow
+      username: flow
+      password: password..
+    neo4j:
+      uri: http://neo4j:password@xx.xxx.xxx.xxx:7474
+      username: neo4j
+      password: password
 
 #redis查询日志
 logging:
